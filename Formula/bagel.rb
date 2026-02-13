@@ -1,23 +1,33 @@
 class Bagel < Formula
   desc "CLI to audit posture and evaluate compromise blast radius"
   homepage "https://boostsecurityio.github.io/bagel/"
-  url "https://github.com/boostsecurityio/bagel/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "b7317200cfc6d7556c6c1fbeb244c8397f68fc2998348bf07dbdc4f9bed46506"
+  version "0.2.0"
   license "GPL-3.0-only"
-  head "https://github.com/boostsecurityio/bagel.git", branch: "main"
 
-  depends_on "go" => :build
+  on_macos do
+    if Hardware::CPU.arm?
+      url "https://github.com/boostsecurityio/bagel/releases/download/v#{version}/bagel_Darwin_arm64.tar.gz"
+      sha256 "ee9908ff268ec00ec9524f817abc5855e29e06aa52bb7e4cce9e129c921a0f1e"
+    end
+    if Hardware::CPU.intel?
+      url "https://github.com/boostsecurityio/bagel/releases/download/v#{version}/bagel_Darwin_x86_64.tar.gz"
+      sha256 "053dd417552d76d88e337973231887628194684b6d1cae762967eaef202d2e6a"
+    end
+  end
+
+  on_linux do
+    if Hardware::CPU.arm?
+      url "https://github.com/boostsecurityio/bagel/releases/download/v#{version}/bagel_Linux_arm64.tar.gz"
+      sha256 "c02056252b2434ae9ede2edd86fafa684ff9f9a7c3c47bf41d2e7de465824ff0"
+    end
+    if Hardware::CPU.intel?
+      url "https://github.com/boostsecurityio/bagel/releases/download/v#{version}/bagel_Linux_x86_64.tar.gz"
+      sha256 "81eefb03a6a89a07c34c9c7cfc1861a8477a80c14451b8a13b582f7132660654"
+    end
+  end
 
   def install
-    ldflags = %W[
-      -s -w
-      -X main.Version=#{version}
-      -X main.Commit=#{tap.user}
-      -X main.Date=#{time.iso8601}
-    ]
-
-    system "go", "build", *std_go_args(ldflags: ldflags), "./cmd/bagel"
-
+    bin.install "bagel"
     generate_completions_from_executable(bin/"bagel", "completion")
   end
 
@@ -37,7 +47,6 @@ class Bagel < Formula
       aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     INI
 
-    # Removed the explicit '0' to satisfy brew audit
     output = shell_output("#{bin}/bagel scan --config #{testpath}/bagel.yaml")
     assert_match "AWS", output
   end
