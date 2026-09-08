@@ -26,5 +26,5 @@ jobs:
         run: |
           shopt -s nullglob
           for f in Casks/*.rb; do
-            brew install --cask "$f"
+            brew install --cask "boostsecurityio/tap/$(basename "$f" .rb)"
           done
