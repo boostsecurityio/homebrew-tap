@@ -20,7 +20,11 @@ jobs:
           key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ runner.os }}-rubygems-
 
-      - name: Run brew test
+      # goreleaser publishes prebuilt binaries as casks (brews is deprecated),
+      # and casks have no `brew test`: installing one is the test.
+      - name: Install every cask
         run: |
-          brew install Formula/bagel.rb
-          brew test Formula/bagel.rb
+          shopt -s nullglob
+          for f in Casks/*.rb; do
+            brew install --cask "$f"
+          done
