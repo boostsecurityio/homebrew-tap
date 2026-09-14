@@ -9,25 +9,25 @@ cask "dazio" do
     run "{{HOMEBREW_PREFIX}}/bin/dazio", args: ["service", "restart"], print_stdout: true
   end
 
-  version "0.1.4"
+  version "0.1.6"
 
   on_macos do
     on_arm do
-      sha256 "76524ce0178afab0942bb53312d9cb22f888f22185472a4ea32645fada56d780"
+      sha256 "e0582268f6669268097b93350c957f51a3dbcc108d028feab2717a9977014a56"
       url "https://github.com/boostsecurityio/dazio/releases/download/v#{version}/dazio_#{version}_darwin_arm64.tar.gz"
     end
     on_intel do
-      sha256 "16c78ff5fa4adb9806aef3f304effa87539b63acf745e6b8ba551742b08f5a0d"
+      sha256 "11a9416c565f3a4d207894eb1a68dc62fad853ab8f14596f8f612d79bb4eeb3a"
       url "https://github.com/boostsecurityio/dazio/releases/download/v#{version}/dazio_#{version}_darwin_amd64.tar.gz"
     end
   end
   on_linux do
     on_arm do
-      sha256 "a34c0b2acf37dd0424e3d22aeeade656b18c5b1a214afae7e9b853c70e1a7a2f"
+      sha256 "39a104a3820337a6d1cd8d8f23a6485abe29d8487759f5c8eb6b2f2c9dbb1f94"
       url "https://github.com/boostsecurityio/dazio/releases/download/v#{version}/dazio_#{version}_linux_arm64.tar.gz"
     end
     on_intel do
-      sha256 "c5820924cf77b435dbc0e9ada0644494d8cd2946ce83ff5e9c3c3669b9c677bb"
+      sha256 "0f750b8d5d5887f1b08568106daed5376e825975c0f1626ce50ace4b66242f5d"
       url "https://github.com/boostsecurityio/dazio/releases/download/v#{version}/dazio_#{version}_linux_amd64.tar.gz"
     end
   end
